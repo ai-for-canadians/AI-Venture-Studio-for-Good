@@ -89,7 +89,7 @@ export function DemoProvider({ children }: { children: ReactNode }) {
         livedExperience: "",
         expertise: [],
         ventureIds: [],
-        credits: 100, // Start with 100 demo credits
+        credits: 500, // Start with 500 demo credits
         membershipTier: "free",
         createdAt: new Date(),
         isDemo: true,
@@ -111,7 +111,7 @@ export function DemoProvider({ children }: { children: ReactNode }) {
         livedExperience: "",
         expertise: [],
         ventureIds: [],
-        credits: 100,
+        credits: 500,
         membershipTier: "free",
         createdAt: new Date(),
         isDemo: true,
