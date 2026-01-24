@@ -18,6 +18,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { useDemo } from "@/lib/demo"
+import { useAuth } from "@/lib/auth/context"
 import { getRecommendedPlaybooks, matchPlaybooksToUser } from "@/lib/demo/playbook-matcher"
 import { getPlaybookById } from "@/data/playbooks"
 import type { Category } from "@/types"
@@ -39,10 +40,11 @@ const categoryColors: Record<Category, string> = {
 }
 
 export default function DashboardPage() {
-  const { user, ventures } = useDemo()
+  const { user } = useAuth()
+  const { ventures } = useDemo()
 
   // Get matched playbooks based on user profile
-  const matchedPlaybooks = user ? matchPlaybooksToUser(user) : []
+  const matchedPlaybooks = user ? matchPlaybooksToUser(user as Parameters<typeof matchPlaybooksToUser>[0]) : []
   const recommendedPlaybooks = matchedPlaybooks.slice(0, 3)
 
   // Calculate stats

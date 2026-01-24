@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { useDemo } from "@/lib/demo"
+import { useAuth } from "@/lib/auth/context"
 import type { Category } from "@/types"
 import { CATEGORY_LABELS } from "@/types"
 
@@ -43,7 +43,7 @@ const expertiseOptions = [
 ]
 
 export default function ProfilePage() {
-  const { user, updateProfile } = useDemo()
+  const { user, updateProfile, isDemo } = useAuth()
   const [saved, setSaved] = useState(false)
 
   const [name, setName] = useState(user?.name || "")
@@ -71,8 +71,8 @@ export default function ProfilePage() {
     )
   }
 
-  const handleSave = () => {
-    updateProfile({
+  const handleSave = async () => {
+    await updateProfile({
       name,
       location,
       motivations,
@@ -236,7 +236,7 @@ export default function ProfilePage() {
               <p className="font-medium">Email</p>
               <p className="text-sm text-muted-foreground">{user?.email}</p>
             </div>
-            <Badge variant="secondary">Demo Mode</Badge>
+            {isDemo && <Badge variant="secondary">Demo Mode</Badge>}
           </div>
           <div className="flex items-center justify-between">
             <div>

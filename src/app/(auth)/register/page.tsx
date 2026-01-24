@@ -3,29 +3,41 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { Sprout, Mail, Lock, User, ArrowRight } from "lucide-react"
+import { Sprout, Mail, Lock, User, ArrowRight, AlertCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { useDemo } from "@/lib/demo"
+import { useAuth } from "@/lib/auth/context"
 
 export default function RegisterPage() {
   const router = useRouter()
-  const { register } = useDemo()
+  const { signUp } = useAuth()
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
+    setError("")
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters")
+      setIsLoading(false)
+      return
+    }
 
     try {
-      await register({ name, email })
-      router.push("/onboarding")
-    } catch (error) {
-      console.error(error)
+      const result = await signUp(email, password, name)
+      if (result.success) {
+        router.push("/onboarding")
+      } else {
+        setError(result.error || "Failed to create account")
+      }
+    } catch (err) {
+      setError("An unexpected error occurred")
     } finally {
       setIsLoading(false)
     }
@@ -105,6 +117,13 @@ export default function RegisterPage() {
                   />
                 </div>
               </div>
+
+              {error && (
+                <div className="flex items-center gap-2 p-3 rounded-lg bg-destructive/10 text-destructive text-sm">
+                  <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                  {error}
+                </div>
+              )}
 
               <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading ? "Creating account..." : "Create Account"}

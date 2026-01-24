@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { useDemo } from "@/lib/demo"
+import { useAuth } from "@/lib/auth/context"
 import { getPlaybookById } from "@/data/playbooks"
 import type { Category } from "@/types"
 
@@ -42,7 +43,8 @@ function NewVentureForm() {
   const searchParams = useSearchParams()
   const playbookId = searchParams.get("playbook")
 
-  const { user, createVenture } = useDemo()
+  const { user } = useAuth()
+  const { createVenture } = useDemo()
   const [name, setName] = useState("")
   const [location, setLocation] = useState(user?.location || "")
   const [isCreating, setIsCreating] = useState(false)
