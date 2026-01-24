@@ -3,41 +3,42 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { Sprout, Mail, Lock, ArrowRight } from "lucide-react"
+import { Sprout, Mail, Lock, ArrowRight, AlertCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { useDemo } from "@/lib/demo"
+import { useAuth } from "@/lib/auth/context"
 
 export default function LoginPage() {
   const router = useRouter()
-  const { login } = useDemo()
+  const { signIn, startDemoMode } = useAuth()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
+    setError("")
 
     try {
-      await login(email, password)
-      router.push("/dashboard")
-    } catch (error) {
-      console.error(error)
+      const result = await signIn(email, password)
+      if (result.success) {
+        router.push("/dashboard")
+      } else {
+        setError(result.error || "Failed to sign in")
+      }
+    } catch (err) {
+      setError("An unexpected error occurred")
     } finally {
       setIsLoading(false)
     }
   }
 
-  const handleDemoLogin = async () => {
-    setIsLoading(true)
-    try {
-      await login("demo@example.com", "demo")
-      router.push("/onboarding")
-    } finally {
-      setIsLoading(false)
-    }
+  const handleDemoLogin = () => {
+    startDemoMode()
+    router.push("/onboarding")
   }
 
   return (
@@ -95,6 +96,13 @@ export default function LoginPage() {
                   />
                 </div>
               </div>
+
+              {error && (
+                <div className="flex items-center gap-2 p-3 rounded-lg bg-destructive/10 text-destructive text-sm">
+                  <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                  {error}
+                </div>
+              )}
 
               <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading ? "Signing in..." : "Sign In"}

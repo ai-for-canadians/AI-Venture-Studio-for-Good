@@ -20,7 +20,7 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
-import { useDemo } from "@/lib/demo"
+import { useAuth } from "@/lib/auth/context"
 import type { Category } from "@/types"
 import { CATEGORY_LABELS } from "@/types"
 
@@ -57,7 +57,7 @@ const budgetOptions = [
 
 export default function OnboardingPage() {
   const router = useRouter()
-  const { user, completeOnboarding } = useDemo()
+  const { user, completeOnboarding } = useAuth()
   const [step, setStep] = useState(1)
   const totalSteps = 4
 
@@ -83,8 +83,8 @@ export default function OnboardingPage() {
     )
   }
 
-  const handleComplete = () => {
-    completeOnboarding({
+  const handleComplete = async () => {
+    await completeOnboarding({
       location,
       motivations,
       impactInterests,

@@ -25,6 +25,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { useDemo } from "@/lib/demo"
+import { useAuth } from "@/lib/auth/context"
 import { getPlaybookById } from "@/data/playbooks"
 import { getStepsForPlaybook, getStepById } from "@/data/steps"
 import type { Category, StepStatus } from "@/types"
@@ -52,7 +53,8 @@ export default function VentureDetailPage({
 }) {
   const { id } = use(params)
   const router = useRouter()
-  const { user, getVenture, executeStep } = useDemo()
+  const { user } = useAuth()
+  const { getVenture, executeStep } = useDemo()
   const [executingStep, setExecutingStep] = useState<string | null>(null)
   const [viewingArtifact, setViewingArtifact] = useState<string | null>(null)
 
