@@ -11,6 +11,19 @@ import { affordableHousingCoop } from "./housing/affordable-housing-coop"
 import { homeRepairProgram } from "./housing/home-repair-program"
 import { communitySolar } from "./energy/community-solar"
 import { energyEfficiencyProgram } from "./energy/energy-efficiency-program"
+// New categories
+import { communityComposting } from "./environment/community-composting"
+import { toolLibrary } from "./environment/tool-library"
+import { microLendingCircle } from "./economic-empowerment/micro-lending-circle"
+import { workerCooperative } from "./economic-empowerment/worker-cooperative"
+import { childcareCooperative } from "./childcare-family/childcare-cooperative"
+import { seniorCompanionProgram } from "./seniors/senior-companion-program"
+import { bikeCooperative } from "./transportation/bike-cooperative"
+import { volunteerDriverNetwork } from "./transportation/volunteer-driver-network"
+import { digitalLiteracyProgram } from "./digital-inclusion/digital-literacy-program"
+import { deviceLendingLibrary } from "./digital-inclusion/device-lending-library"
+import { communityMakerspace } from "./arts-culture/community-makerspace"
+import { reentrySupportProgram } from "./social-services/reentry-support-program"
 import type { Playbook, Category } from "@/types"
 
 export const playbooks: Playbook[] = [
@@ -32,6 +45,26 @@ export const playbooks: Playbook[] = [
   // Energy
   communitySolar,
   energyEfficiencyProgram,
+  // Environment
+  communityComposting,
+  toolLibrary,
+  // Economic Empowerment
+  microLendingCircle,
+  workerCooperative,
+  // Childcare & Family
+  childcareCooperative,
+  // Seniors
+  seniorCompanionProgram,
+  // Transportation
+  bikeCooperative,
+  volunteerDriverNetwork,
+  // Digital Inclusion
+  digitalLiteracyProgram,
+  deviceLendingLibrary,
+  // Arts & Culture
+  communityMakerspace,
+  // Social Services
+  reentrySupportProgram,
 ]
 
 export const playbooksByCategory: Record<Category, Playbook[]> = {
@@ -40,6 +73,14 @@ export const playbooksByCategory: Record<Category, Playbook[]> = {
   housing: playbooks.filter((p) => p.category === "housing"),
   healthcare: playbooks.filter((p) => p.category === "healthcare"),
   energy: playbooks.filter((p) => p.category === "energy"),
+  environment: playbooks.filter((p) => p.category === "environment"),
+  economic_empowerment: playbooks.filter((p) => p.category === "economic_empowerment"),
+  childcare_family: playbooks.filter((p) => p.category === "childcare_family"),
+  seniors: playbooks.filter((p) => p.category === "seniors"),
+  transportation: playbooks.filter((p) => p.category === "transportation"),
+  digital_inclusion: playbooks.filter((p) => p.category === "digital_inclusion"),
+  arts_culture: playbooks.filter((p) => p.category === "arts_culture"),
+  social_services: playbooks.filter((p) => p.category === "social_services"),
 }
 
 export function getPlaybookById(id: string): Playbook | undefined {
@@ -79,4 +120,24 @@ export {
   // Energy
   communitySolar,
   energyEfficiencyProgram,
+  // Environment
+  communityComposting,
+  toolLibrary,
+  // Economic Empowerment
+  microLendingCircle,
+  workerCooperative,
+  // Childcare & Family
+  childcareCooperative,
+  // Seniors
+  seniorCompanionProgram,
+  // Transportation
+  bikeCooperative,
+  volunteerDriverNetwork,
+  // Digital Inclusion
+  digitalLiteracyProgram,
+  deviceLendingLibrary,
+  // Arts & Culture
+  communityMakerspace,
+  // Social Services
+  reentrySupportProgram,
 }
